@@ -1,0 +1,34 @@
+{
+    "name": "@marsa/react",
+    "version": "0.0.0",
+    "type": "module",
+    "description": "React integration for Marsa.",
+    "files": [
+        "dist",
+        "README.md"
+    ],
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc --project tsconfig.json",
+        "dev": "tsc --project tsconfig.json --watch",
+        "lint": "eslint src --max-warnings=0",
+        "test": "vitest run --config ../../vitest.config.ts",
+        "typecheck": "tsc --project tsconfig.json --noEmit"
+    },
+    "dependencies": {
+        "@marsa/core": "workspace:^"
+    },
+    "peerDependencies": {
+        "react": ">=18.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "@marsa/router-tanstack",
+    "projectType": "library",
+    "sourceRoot": "packages/router-tanstack/src",
+    "targets": {
+        "dev": {
+            "executor": "nx:run-commands",
+            "continuous": true,
+            "options": {
+                "cwd": "packages/router-tanstack",
+                "command": "pnpm dev"
+            }
+        },
+        "build": {
+            "executor": "nx:run-commands",
+            "options": {
+                "cwd": "packages/router-tanstack",
+                "command": "pnpm build"
+            }
+        },
+        "lint": {
+            "executor": "nx:run-commands",
+            "options": {
+                "cwd": "packages/router-tanstack",
+                "command": "pnpm lint"
+            }
+        },
+        "test": {
+            "executor": "nx:run-commands",
+            "options": {
+                "cwd": "packages/router-tanstack",
+                "command": "pnpm test"
+            }
+        },
+        "typecheck": {
+            "executor": "nx:run-commands",
+            "options": {
+                "cwd": "packages/router-tanstack",
+                "command": "pnpm typecheck"
+            }
+        }
+    }
+}

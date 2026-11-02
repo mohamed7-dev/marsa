@@ -1,0 +1,6 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "floating-dashboard",
+    "projectType": "application",
+    "sourceRoot": "examples/floating-dashboard/src"
+}

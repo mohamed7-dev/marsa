@@ -1,0 +1,18 @@
+{
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "conventionalCommits.scopes": [
+        "repo",
+        "core",
+        "react",
+        "ui",
+        "vite",
+        "router-tanstack",
+        "validation-zod",
+        "examples",
+        "docs"
+    ]
+}
