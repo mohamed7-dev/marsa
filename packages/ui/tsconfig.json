@@ -2,11 +2,12 @@
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
         "lib": ["ES2022", "DOM", "DOM.Iterable"],
-        "rootDir": "src",
-        "outDir": "dist",
-        "declaration": true,
-        "declarationMap": true,
-        "sourceMap": true
+        "types": ["@types/node"],
+
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "useDefineForClassFields": false,
+        "strictPropertyInitialization": false
     },
     "include": ["src/**/*.ts"]
 }

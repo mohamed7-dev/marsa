@@ -1,0 +1,154 @@
+// Controls whose structure GTK builds from internal nodes: buttons with content,
+// check/radio, switch, progress bar, scale, level bar, entry/spin button, avatar, spinner.
+
+// -- buttons
+:where(.adw-button, .adw-menubutton, .adw-splitbutton) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex: none;
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.adw-button > .adw-box,
+.adw-button > .adw-buttoncontent { display: inline-flex; align-items: center; justify-content: center; }
+.adw-buttoncontent { display: inline-flex; align-items: center; gap: 6px; }
+.adw-menubutton { align-items: stretch; }
+.adw-menubutton > .adw-button { flex: 1 1 auto; }
+.adw-splitbutton { display: inline-flex; align-items: stretch; }
+.adw-splitbutton > .adw-button { align-self: stretch; }
+.adw-linked { display: inline-flex; align-items: stretch; }
+.adw-linked.adw-vertical { flex-direction: column; }
+.adw-linked > * { flex: 0 1 auto; }
+
+// -- check / radio:  <label class="adw-checkbutton"><input type="checkbox" class="adw-check"> Label</label>
+:where(.adw-checkbutton) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: default;
+}
+:where(.adw-check, .adw-radio) {
+  display: inline-block;
+  flex: none;
+  vertical-align: middle;
+}
+
+// -- switch:  <button class="adw-switch" role="switch" aria-checked="false"><span class="adw-slider"></span></button>
+.adw-switch {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  inline-size: 40px;
+  block-size: 20px;
+  position: relative;
+  cursor: default;
+}
+.adw-switch > .adw-slider {
+  flex: none;
+  transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 200ms, box-shadow 200ms;
+}
+.adw-switch#{$state-checked} > .adw-slider { transform: translateX(20px); }
+.adw-switch#{$state-checked}:dir(rtl) > .adw-slider { transform: translateX(-20px); }
+
+// -- progress bar:  .adw-progressbar > .adw-trough > .adw-progress   (set --value: 0..1)
+.adw-progressbar {
+  --value: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.adw-progressbar > .adw-trough { display: flex; position: relative; overflow: hidden; align-self: stretch; }
+.adw-progressbar.adw-horizontal > .adw-trough > .adw-progress { inline-size: calc(var(--value) * 100%); }
+.adw-progressbar.adw-vertical { flex-direction: row; }
+.adw-progressbar.adw-vertical > .adw-trough { flex-direction: column; justify-content: flex-end; align-self: stretch; }
+.adw-progressbar.adw-vertical > .adw-trough > .adw-progress { block-size: calc(var(--value) * 100%); }
+.adw-progressbar > .adw-trough > .adw-progress { flex: none; transition: inline-size 200ms, block-size 200ms; }
+.adw-progressbar.adw-pulse > .adw-trough > .adw-progress { inline-size: 30%; animation: adw-pulse 1.6s ease-in-out infinite alternate; }
+@keyframes adw-pulse { from { transform: translateX(0); } to { transform: translateX(233%); } }
+
+// -- scale:  .adw-scale > .adw-trough > ( .adw-highlight + .adw-slider )   (set --value: 0..1)
+.adw-scale { --value: 0; display: flex; position: relative; }
+.adw-scale.adw-horizontal { flex-direction: row; align-items: center; }
+.adw-scale.adw-vertical { flex-direction: column-reverse; align-items: center; }
+.adw-scale > .adw-trough { position: relative; display: flex; flex: 1 1 auto; align-self: stretch; align-items: center; }
+.adw-scale.adw-vertical > .adw-trough { flex-direction: column-reverse; justify-content: flex-start; }
+.adw-scale.adw-horizontal > .adw-trough > .adw-highlight { align-self: stretch; inline-size: calc(var(--value) * 100%); flex: none; }
+.adw-scale.adw-vertical > .adw-trough > .adw-highlight { align-self: stretch; block-size: calc(var(--value) * 100%); flex: none; }
+.adw-scale.adw-horizontal > .adw-trough > .adw-slider {
+  position: absolute;
+  inset-inline-start: calc(var(--value) * 100%);
+  transform: translateX(-50%);
+}
+.adw-scale.adw-horizontal:dir(rtl) > .adw-trough > .adw-slider { transform: translateX(50%); }
+.adw-scale.adw-vertical > .adw-trough > .adw-slider {
+  position: absolute;
+  inset-block-end: calc(var(--value) * 100%);
+  transform: translateY(50%);
+}
+.adw-scale > .adw-trough > .adw-slider { flex: none; touch-action: none; }
+// GTK sizes the trough from the slider; here the slider is positioned absolutely.
+.adw-scale.adw-horizontal > .adw-trough { block-size: 6px; }
+.adw-scale.adw-vertical > .adw-trough { inline-size: 6px; }
+
+// -- level bar:  .adw-levelbar > .adw-trough > .adw-block (+ .adw-filled | .adw-empty)
+.adw-levelbar > .adw-trough { display: flex; gap: 2px; }
+.adw-levelbar.adw-vertical > .adw-trough { flex-direction: column-reverse; }
+.adw-levelbar > .adw-trough > .adw-block { flex: 1 1 0; }
+.adw-levelbar:not(.adw-discrete) > .adw-trough > .adw-block { flex: 0 0 auto; }
+
+// -- entry / spin button
+:where(.adw-entry) {
+  display: flex;
+  align-items: center;
+  box-sizing: content-box;
+}
+input.adw-entry { inline-size: auto; min-inline-size: 0; }
+.adw-spinbutton { display: inline-flex; align-items: stretch; }
+.adw-spinbutton > .adw-text, .adw-spinbutton > input { flex: 1 1 auto; min-inline-size: 0; }
+.adw-spinbutton > .adw-button { flex: none; }
+.adw-spinbutton.adw-vertical { flex-direction: column; }
+.adw-editablelabel { display: inline-flex; align-items: center; }
+
+// -- dropdown / combo
+.adw-dropdown { display: inline-flex; align-items: stretch; }
+.adw-dropdown > .adw-button { flex: 1 1 auto; }
+
+// -- avatar:  <span class="adw-avatar color3" style="--size: 48px">AB</span>
+.adw-avatar {
+  --size: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  inline-size: var(--size);
+  block-size: var(--size);
+  font-size: calc(var(--size) * 0.4);
+  line-height: 1;
+  vertical-align: middle;
+}
+.adw-avatar > img { inline-size: 100%; block-size: 100%; object-fit: cover; }
+
+// -- spinner:  <span class="adw-image adw-spinner" role="progressbar" aria-busy="true"></span>
+.adw-spinner {
+  --_t: max(2px, calc(var(--icon-size, 16px) / 8));
+  border-radius: 50%;
+  background: conic-gradient(from 0turn, transparent 0 8%, currentColor 100%);
+  mask: radial-gradient(farthest-side, transparent calc(100% - var(--_t)), #000 calc(100% - var(--_t) + 0.5px));
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--_t)), #000 calc(100% - var(--_t) + 0.5px));
+  animation: adw-spin 900ms linear infinite;
+}
+
+// -- expander arrow
+.adw-expander { display: inline-block; flex: none; transition: transform 200ms; }
+
+// -- scrollbars (overlay style)
+.adw-scrolledwindow::-webkit-scrollbar { inline-size: 8px; block-size: 8px; }
+.adw-scrolledwindow::-webkit-scrollbar-thumb { background: color-mix(in srgb, currentColor 35%, transparent); border-radius: 8px; border: 2px solid transparent; background-clip: padding-box; }
+.adw-scrolledwindow::-webkit-scrollbar-thumb:hover { background-color: color-mix(in srgb, currentColor 55%, transparent); background-clip: padding-box; }
+.adw-scrolledwindow::-webkit-scrollbar-track { background: transparent; }

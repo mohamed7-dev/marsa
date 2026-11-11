@@ -1,0 +1,47 @@
+// Popovers, menus, tooltips and toasts: positioning only.
+// Use anchor positioning, Floating UI or the HTML `popover` attribute for placement.
+
+.adw-popover {
+  position: absolute;
+  z-index: 100;
+  display: block;
+  box-sizing: border-box;
+}
+.adw-popover:not([popover]):not(.adw-visible):not([open]) { display: none; }
+.adw-popover[popover] {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  inset: auto;
+  overflow: visible;
+  background: none;
+  color: inherit;
+  position: fixed;
+}
+.adw-popover[popover]:not(:popover-open) { display: none; }
+.adw-popover > .adw-contents { display: flex; flex-direction: column; box-sizing: border-box; max-inline-size: 90vw; max-block-size: 80vh; overflow: auto; }
+.adw-popover > .adw-arrow { display: none; }
+.adw-popover.adw-menu > .adw-contents > .adw-stack,
+.adw-popover.adw-menu > .adw-contents > .adw-box { flex-direction: column; }
+
+.adw-tooltip {
+  position: absolute;
+  z-index: 1100;
+  pointer-events: none;
+  inline-size: max-content;
+  max-inline-size: 320px;
+}
+
+.adw-toast {
+  position: fixed;
+  z-index: 1200;
+  inset-inline: 0;
+  inset-block-end: 24px;
+  margin-inline: auto;
+  inline-size: fit-content;
+  max-inline-size: calc(100% - 24px);
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+.adw-toast > .adw-label { flex: 1 1 auto; min-inline-size: 0; }

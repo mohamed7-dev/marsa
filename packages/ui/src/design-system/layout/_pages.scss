@@ -1,0 +1,35 @@
+// AdwStatusPage, AdwAboutDialog bits, frames and cards.
+//
+//   <div class="adw-statuspage">
+//     <div class="adw-scrolledwindow"><div class="adw-viewport"><div class="adw-box">
+//       <span class="adw-icon" style="--icon: url(…)"></span>      (optional, use .adw-symbolic)
+//       <div class="adw-clamp"><div class="adw-box">
+//         <div class="adw-box"><h1 class="adw-title">Title</h1><p class="adw-description">…</p></div>
+//         <div class="adw-clamp">…actions…</div>
+//       </div></div>
+//     </div></div></div>
+//   </div>
+
+.adw-statuspage { display: flex; flex-direction: column; min-block-size: 0; }
+.adw-statuspage > .adw-scrolledwindow { flex: 1 1 auto; }
+.adw-statuspage > .adw-scrolledwindow > .adw-viewport > .adw-box,
+.adw-statuspage > .adw-scrolledwindow > .adw-viewport > .adw-box > .adw-clamp > .adw-box,
+.adw-statuspage > .adw-scrolledwindow > .adw-viewport > .adw-box > .adw-clamp > .adw-box > .adw-box {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.adw-statuspage > .adw-scrolledwindow > .adw-viewport > .adw-box { justify-content: center; flex: 1 1 auto; }
+.adw-statuspage .adw-title { margin: 0; }
+.adw-statuspage .adw-description { margin: 0; }
+.adw-statuspage > .adw-scrolledwindow > .adw-viewport > .adw-box > .adw-icon { align-self: center; }
+.adw-statuspage > .adw-scrolledwindow > .adw-viewport > .adw-box > .adw-icon.adw-symbolic {
+  inline-size: var(--icon-size, 128px);
+  block-size: var(--icon-size, 128px);
+}
+
+// AdwAboutDialog / generic content blocks
+.adw-about .adw-box.adw-content { flex-direction: column; }
+
+:where(.adw-frame) { display: flex; flex-direction: column; }
+:where(.adw-card) { display: block; }

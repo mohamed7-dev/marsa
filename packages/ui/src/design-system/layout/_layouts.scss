@@ -1,0 +1,12 @@
+// Hand-written. libadwaita's C widgets do their own size allocation; this is
+// the CSS equivalent for the layout widgets, so the ported visual rules have
+// something to hang on. Low specificity on purpose (:where), apps can override.
+
+@import 'box';
+@import 'window';
+@import 'toolbars';
+@import 'split-views';
+@import 'lists';
+@import 'controls';
+@import 'pages';
+@import 'overlays';

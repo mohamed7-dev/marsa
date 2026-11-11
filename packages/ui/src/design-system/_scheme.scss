@@ -1,0 +1,177 @@
+// Hand-written. Color scheme tokens, equivalent to the @define-color block and
+// the :root custom properties of libadwaita's _colors.scss (GTK's
+// @define-color is not CSS, so it is expressed with custom properties here).
+//
+//   light / dark  follow `prefers-color-scheme`
+//   <html data-adw-color-scheme="light|dark">  (or any subtree) forces a scheme
+//
+// The public custom properties keep libadwaita's names, so recoloring works
+// the same way as in a GTK app:  :root { --accent-bg-color: var(--accent-purple); }
+
+$_light: (
+  'destructive-bg-color': $red_3,
+  'destructive-fg-color': white,
+  'success-bg-color': $green_4,
+  'success-fg-color': white,
+  'warning-bg-color': $yellow_5,
+  'warning-fg-color': RGB(0 0 0 / 80%),
+  'error-bg-color': $red_3,
+  'error-fg-color': white,
+
+  'window-bg-color': #fafafb,
+  'window-fg-color': RGB(0 0 6 / 80%),
+  'view-bg-color': #ffffff,
+  'view-fg-color': RGB(0 0 6 / 80%),
+
+  'headerbar-bg-color': #ffffff,
+  'headerbar-fg-color': RGB(0 0 6 / 80%),
+  'headerbar-border-color': RGB(0 0 6 / 80%),
+  'headerbar-backdrop-color': var(--window-bg-color),
+  'headerbar-shade-color': RGB(0 0 6 / 12%),
+  'headerbar-darker-shade-color': RGB(0 0 6 / 12%),
+
+  'sidebar-bg-color': #ebebed,
+  'sidebar-fg-color': RGB(0 0 6 / 80%),
+  'sidebar-backdrop-color': #f2f2f4,
+  'sidebar-shade-color': RGB(0 0 6 / 7%),
+  'sidebar-border-color': RGB(0 0 6 / 7%),
+
+  'secondary-sidebar-bg-color': #f3f3f5,
+  'secondary-sidebar-fg-color': RGB(0 0 6 / 80%),
+  'secondary-sidebar-backdrop-color': #f6f6fa,
+  'secondary-sidebar-shade-color': RGB(0 0 6 / 7%),
+  'secondary-sidebar-border-color': RGB(0 0 6 / 7%),
+
+  'card-bg-color': #ffffff,
+  'card-fg-color': RGB(0 0 6 / 80%),
+  'card-shade-color': RGB(0 0 6 / 7%),
+
+  'dialog-bg-color': #fafafb,
+  'dialog-fg-color': RGB(0 0 6 / 80%),
+
+  'popover-bg-color': #ffffff,
+  'popover-fg-color': RGB(0 0 6 / 80%),
+  'popover-shade-color': RGB(0 0 6 / 7%),
+
+  'thumbnail-bg-color': #ffffff,
+  'thumbnail-fg-color': RGB(0 0 6 / 80%),
+
+  'shade-color': RGB(0 0 6 / 7%),
+  'scrollbar-outline-color': white,
+
+  'active-toggle-bg-color': #ffffff,
+  'active-toggle-fg-color': rgb(0 0 6 / 80%),
+  'overview-bg-color': #f3f3f5,
+  'overview-fg-color': rgb(0 0 6 / 80%),
+
+  'standalone-color-oklab': #{$standalone-color-oklab-light},
+);
+
+$_dark: (
+  'destructive-bg-color': $red_4,
+  'success-bg-color': $green_5,
+  'warning-bg-color': #cd9309,
+  'error-bg-color': $red_4,
+
+  'window-bg-color': #222226,
+  'window-fg-color': white,
+  'view-bg-color': #1d1d20,
+  'view-fg-color': white,
+
+  'headerbar-bg-color': #2e2e32,
+  'headerbar-fg-color': white,
+  'headerbar-border-color': white,
+  'headerbar-backdrop-color': var(--window-bg-color),
+  'headerbar-shade-color': RGB(0 0 6 / 36%),
+  'headerbar-darker-shade-color': RGB(0 0 12 / 90%),
+
+  'sidebar-bg-color': #2e2e32,
+  'sidebar-fg-color': white,
+  'sidebar-backdrop-color': #28282c,
+  'sidebar-shade-color': RGB(0 0 6 / 25%),
+  'sidebar-border-color': RGB(0 0 6 / 36%),
+
+  'secondary-sidebar-bg-color': #28282c,
+  'secondary-sidebar-fg-color': white,
+  'secondary-sidebar-backdrop-color': #252529,
+  'secondary-sidebar-shade-color': RGB(0 0 6 / 25%),
+  'secondary-sidebar-border-color': RGB(0 0 6 / 36%),
+
+  'card-bg-color': RGB(255 255 255 / 8%),
+  'card-fg-color': white,
+  'card-shade-color': RGB(0 0 6 / 36%),
+
+  'dialog-bg-color': #36363a,
+  'dialog-fg-color': white,
+
+  'popover-bg-color': #36363a,
+  'popover-fg-color': white,
+  'popover-shade-color': RGB(0 0 6 / 25%),
+
+  'thumbnail-bg-color': #39393d,
+  'thumbnail-fg-color': white,
+
+  'shade-color': RGB(0 0 6 / 25%),
+  'scrollbar-outline-color': RGB(0 0 12 / 95%),
+
+  'active-toggle-bg-color': rgb(255 255 255 / 20%),
+  'active-toggle-fg-color': #ffffff,
+  'overview-bg-color': #28282c,
+  'overview-fg-color': #ffffff,
+
+  'standalone-color-oklab': #{$standalone-color-oklab-dark},
+);
+
+// Colors derived from the *-bg-color tokens. They are re-declared wherever the
+// scheme (or the accent) changes, because a custom property is computed once
+// on the element that declares it and then inherited.
+@mixin derived-colors {
+  --accent-color: oklab(from var(--accent-bg-color) var(--standalone-color-oklab));
+  --destructive-color: oklab(from var(--destructive-bg-color) var(--standalone-color-oklab));
+  --success-color: oklab(from var(--success-bg-color) var(--standalone-color-oklab));
+  --warning-color: oklab(from var(--warning-bg-color) var(--standalone-color-oklab));
+  --error-color: oklab(from var(--error-bg-color) var(--standalone-color-oklab));
+}
+
+@mixin scheme($map) {
+  @each $name, $value in $map {
+    --#{$name}: #{$value};
+  }
+  @include derived-colors;
+}
+
+:root {
+  color-scheme: light dark;
+
+  --accent-blue: #{$blue_3};
+  --accent-teal: #2190a4;
+  --accent-green: #3a944a;
+  --accent-yellow: #c88800;
+  --accent-orange: #ed5b00;
+  --accent-red: #e62d42;
+  --accent-pink: #d56199;
+  --accent-purple: #9141ac;
+  --accent-slate: #6f8396;
+
+  --accent-bg-color: var(--accent-blue);
+  --accent-fg-color: white;
+
+  @include scheme($_light);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-adw-color-scheme='light']) {
+    @include scheme($_dark);
+  }
+}
+
+[data-adw-color-scheme='light'] {
+  color-scheme: light;
+  @include scheme($_light);
+}
+
+[data-adw-color-scheme='dark'] {
+  color-scheme: dark;
+  @include scheme($_light); // fill in tokens the dark map leaves unchanged
+  @include scheme($_dark);
+}

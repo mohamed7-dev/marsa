@@ -1,0 +1,126 @@
+// Hand-written. Foundations the GTK stylesheet gets for free from the toolkit:
+// box model, native-element resets, typography and shared helpers.
+//
+// Everything here is wrapped in :where() or has the specificity of a single
+// class, and is emitted *before* the ported widget rules, so widget styles
+// always win and apps can override both.
+
+$state-checked: ':is(:checked, .adw-checked, [aria-checked=true], [aria-pressed=true])';
+
+:root {
+  --adw-font-family: 'Adwaita Sans', Cantarell, system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
+  --adw-monospace-font-family: 'Adwaita Mono', 'Source Code Pro', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+// GTK's CSS box model is content-box: `min-height: 24px` + `padding: 5px` is a
+// 34px button. Native <button>/<input> default to border-box, so restore it.
+:where([class*='adw-']) {
+  box-sizing: content-box;
+}
+
+:where(button[class*='adw-'], input[class*='adw-'], select[class*='adw-'], textarea[class*='adw-']) {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(button[class*='adw-']) {
+  cursor: default;
+}
+
+:where(a[class*='adw-']) {
+  color: inherit;
+  text-decoration: none;
+}
+
+:where(ul[class*='adw-'], ol[class*='adw-']) {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+:where(hr[class*='adw-']) {
+  border: 0;
+  margin: 0;
+}
+
+// Base typography for an app (put .adw-background on <body> or a wrapper).
+:where(.adw-background) {
+  font-family: var(--adw-font-family);
+  font-size: 11pt;
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:where(.adw-monospace) {
+  font-family: var(--adw-monospace-font-family);
+}
+
+// ---------------------------------------------------------------- icons ----
+
+// An icon node: sized by --icon-size (set by .normal-icons, .large-icons, ...).
+:where(.adw-image, .adw-icon) {
+  display: inline-block;
+  flex: none;
+  inline-size: var(--icon-size, 16px);
+  block-size: var(--icon-size, 16px);
+  vertical-align: middle;
+}
+
+// Symbolic icon from any mask image:  <span class="adw-image adw-symbolic" style="--icon: url(...)">
+.adw-symbolic {
+  background-color: currentColor;
+  mask: var(--icon) center / contain no-repeat;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+}
+
+// The icons libadwaita draws from the GTK icon theme, as ready-made classes.
+@each $name, $data in $icons {
+  .adw-icon-#{$name} {
+    @include icon($name);
+  }
+}
+
+// ----------------------------------------------------------- utilities ----
+
+.adw-hidden { display: none !important; }
+
+.adw-visually-hidden {
+  position: absolute !important;
+  inline-size: 1px; block-size: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden; clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.adw-hexpand { flex: 1 1 0; min-inline-size: 0; }
+.adw-vexpand { flex: 1 1 0; min-block-size: 0; }
+.adw-hexpand.adw-vexpand { flex: 1 1 0; }
+
+.adw-align-start   { align-self: flex-start; }
+.adw-align-center  { align-self: center; }
+.adw-align-end     { align-self: flex-end; }
+.adw-align-fill    { align-self: stretch; }
+.adw-justify-start  { margin-inline-end: auto; }
+.adw-justify-center { margin-inline: auto; }
+.adw-justify-end    { margin-inline-start: auto; }
+
+@keyframes adw-spin {
+  to { transform: rotate(1turn); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([class*='adw-']) {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

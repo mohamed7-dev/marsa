@@ -1,0 +1,90 @@
+// AdwNavigationSplitView / AdwOverlaySplitView / AdwNavigationView / AdwFlap-like layouts.
+//
+// Collapsing is state, not magic: add `.adw-collapsed` yourself (a media query,
+// a ResizeObserver, or a container query on a wrapper), e.g.
+//   @container (max-width: 400px) { .adw-navigation-split-view { … } }
+// The `adw-collapse-below()` Sass mixin does that for you when you use the SCSS API.
+
+// -- navigation split view:  .sidebar-pane + .content-pane
+.adw-navigation-split-view {
+  --min-sidebar-width: 180px;
+  --max-sidebar-width: 280px;
+  --sidebar-width-fraction: 25%;
+  display: grid;
+  grid-template-columns:
+    clamp(var(--min-sidebar-width), var(--sidebar-width-fraction), var(--max-sidebar-width))
+    minmax(0, 1fr);
+  min-block-size: 0;
+}
+.adw-navigation-split-view > .adw-sidebar-pane,
+.adw-navigation-split-view > .adw-content-pane {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  min-block-size: 0;
+  overflow: hidden;
+}
+.adw-navigation-split-view.adw-collapsed { display: block; }
+.adw-navigation-split-view.adw-collapsed > .adw-sidebar-pane,
+.adw-navigation-split-view.adw-collapsed > .adw-content-pane { block-size: 100%; }
+// show the sidebar page, or the content page, when collapsed
+.adw-navigation-split-view.adw-collapsed:not(.adw-show-content) > .adw-content-pane { display: none; }
+.adw-navigation-split-view.adw-collapsed.adw-show-content > .adw-sidebar-pane { display: none; }
+.adw-navigation-split-view.adw-sidebar-end { direction: ltr; }
+.adw-navigation-split-view.adw-sidebar-end > .adw-sidebar-pane { order: 2; }
+.adw-navigation-split-view.adw-sidebar-end { grid-template-columns: minmax(0, 1fr) clamp(var(--min-sidebar-width), var(--sidebar-width-fraction), var(--max-sidebar-width)); }
+
+// -- overlay split view:  .overlay-pane + .content-pane
+.adw-overlay-split-view {
+  --min-sidebar-width: 180px;
+  --max-sidebar-width: 280px;
+  --sidebar-width-fraction: 25%;
+  display: flex;
+  position: relative;
+  min-block-size: 0;
+  overflow: hidden;
+}
+.adw-overlay-split-view > .adw-overlay-pane {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  inline-size: clamp(var(--min-sidebar-width), var(--sidebar-width-fraction), var(--max-sidebar-width));
+  min-block-size: 0;
+  overflow: hidden;
+}
+.adw-overlay-split-view > .adw-content-pane { flex: 1 1 0; min-inline-size: 0; display: flex; flex-direction: column; overflow: hidden; }
+.adw-overlay-split-view:not(.adw-show-sidebar):not(.adw-collapsed) > .adw-overlay-pane { display: none; }
+.adw-overlay-split-view.adw-sidebar-end > .adw-overlay-pane { order: 2; }
+.adw-overlay-split-view.adw-collapsed > .adw-overlay-pane {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: 2;
+  transform: translateX(-105%);
+  transition: transform 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 0 24px rgb(0 0 0 / 25%);
+}
+.adw-overlay-split-view.adw-collapsed.adw-sidebar-end > .adw-overlay-pane { inset-inline-start: auto; inset-inline-end: 0; transform: translateX(105%); }
+.adw-overlay-split-view.adw-collapsed.adw-show-sidebar > .adw-overlay-pane { transform: none; }
+.adw-overlay-split-view:dir(rtl).adw-collapsed > .adw-overlay-pane { transform: translateX(105%); }
+.adw-overlay-split-view:dir(rtl).adw-collapsed.adw-show-sidebar > .adw-overlay-pane { transform: none; }
+
+// -- navigation view: pages stacked in one cell, the active one is visible
+.adw-navigation-view { display: grid; position: relative; min-block-size: 0; overflow: hidden; }
+.adw-navigation-view > .adw-navigation-page {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  min-block-size: 0;
+}
+.adw-navigation-view > .adw-navigation-page:not(.adw-active) { display: none; }
+
+// -- stack (GtkStack / GtkStackSwitcher / GtkStackSidebar)
+.adw-stack { display: grid; }
+.adw-stack > * { grid-area: 1 / 1; min-inline-size: 0; min-block-size: 0; }
+.adw-stack > :not(.adw-visible-child):not([aria-hidden='false']) { visibility: hidden; pointer-events: none; }
+.adw-stack.adw-single > :not(.adw-visible-child) { display: none; }
+.adw-stackswitcher { display: inline-flex; }
+.adw-stackswitcher.adw-vertical { flex-direction: column; }
+.adw-stacksidebar { display: flex; flex-direction: column; }

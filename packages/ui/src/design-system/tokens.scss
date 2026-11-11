@@ -1,0 +1,7 @@
+// Public global stylesheet: inheritable custom properties for component and
+// application styles, with light/dark schemes. No widget selectors.
+
+@import 'palette';
+@import 'variables';
+@import 'scheme';
+@import 'global-tokens';

@@ -1,0 +1,67 @@
+.adw-background {
+  color: var(--window-fg-color);
+  background-color: var(--window-bg-color);
+}
+
+.adw-dnd {
+  color: var(--window-fg-color);
+}
+
+.adw-normal-icons {
+  --icon-size: 16px;
+}
+
+.adw-large-icons {
+  --icon-size: 32px;
+}
+
+.adw-osd:not(.adw-progressbar):not(.adw-button):not(.adw-menubutton):not(.adw-splitbutton):not(.adw-inline-view-switcher) {
+  --accent-bg-color: RGB(255 255 255 / 75%);
+  --accent-fg-color: RGB(0 0 0 / 75%);
+  --scrollbar-outline-color: RGB(0 0 0 / 50%);
+  --standalone-color-oklab: max(l, 0.85) a b;
+  --accent-color: oklab(from var(--accent-bg-color) var(--standalone-color-oklab));
+  --destructive-color: oklab(from var(--destructive-bg-color) var(--standalone-color-oklab));
+  --success-color: oklab(from var(--success-bg-color) var(--standalone-color-oklab));
+  --warning-color: oklab(from var(--warning-bg-color) var(--standalone-color-oklab));
+  --error-color: oklab(from var(--error-bg-color) var(--standalone-color-oklab));
+  color: RGB(255 255 255/90%);
+  border: none;
+  background-color: RGB(0 0 0/70%);
+  background-clip: padding-box;
+}
+
+:not(.adw-window).adw-drop-active:focus,
+:not(.adw-window).adw-drop-active {
+  border-color: var(--accent-bg-color);
+  box-shadow: inset 0 0 0 1px var(--accent-bg-color);
+  caret-color: var(--accent-bg-color);
+}
+
+placessidebar :not(.adw-window).adw-drop-active:focus,
+placessidebar :not(.adw-window).adw-drop-active,
+.adw-stackswitcher :not(.adw-window).adw-drop-active:focus,
+.adw-stackswitcher :not(.adw-window).adw-drop-active,
+.adw-expander-widget :not(.adw-window).adw-drop-active:focus,
+.adw-expander-widget :not(.adw-window).adw-drop-active {
+  box-shadow: none;
+}
+
+/* Outline for low res icons */
+.adw-lowres-icon {
+  filter: drop-shadow(0 -1px RGB(0 0 6/5%)) drop-shadow(1px 0 RGB(0 0 6/10%)) drop-shadow(0 1px RGB(0 0 6/30%)) drop-shadow(-1px 0 RGB(0 0 6/10%));
+}
+
+/* Drop shadow for large icons */
+.adw-icon-dropshadow {
+  filter: drop-shadow(0 1px 12px RGB(0 0 6/5%)) drop-shadow(0 -1px RGB(0 0 6/5%)) drop-shadow(1px 0 RGB(0 0 6/10%)) drop-shadow(0 1px RGB(0 0 6/30%)) drop-shadow(-1px 0 RGB(0 0 6/10%));
+}
+
+@keyframes needs_attention {
+  from {
+    background-image: radial-gradient(farthest-side, var(--accent-color) 0%, transparent 0%);
+  }
+  to {
+    background-image: radial-gradient(farthest-side, var(--accent-color) 95%, transparent);
+  }
+}

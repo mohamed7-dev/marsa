@@ -2,11 +2,32 @@
     "name": "@marsa/ui",
     "version": "0.0.0",
     "type": "module",
-    "description": "Framework-independent Marsa Web Components and design system.",
+    "description": "Framework-independent Marsa Web Components built with Lit and native browser technologies, with a GNOME libadwaita stylesheet ported to the web.",
+    "license": "LGPL-2.1-or-later",
+    "keywords": [
+        "libadwaita",
+        "adwaita",
+        "gnome",
+        "gtk",
+        "css",
+        "sass",
+        "scss",
+        "stylesheet",
+        "design-system"
+    ],
     "files": [
         "dist",
-        "README.md"
+        "README.md",
+        "LICENSE",
+        "NOTICE.md"
     ],
+    "sideEffects": [
+        "./dist/index.js",
+        "./src/styles/*.css"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "exports": {
@@ -16,13 +37,31 @@
         }
     },
     "scripts": {
-        "build": "tsc --project tsconfig.json",
+        "fetch:upstream": "node scripts/fetch-upstream.mjs",
+        "port:adwaita": "node scripts/port.mjs",
+        "build:adwaita": "node scripts/build.mjs",
+        "check:adwaita": "node scripts/check.mjs",
+        "sync:adwaita": "pnpm run fetch:upstream && pnpm run port:adwaita && pnpm run build:adwaita && pnpm run check:adwaita",
+        "storybook": "storybook dev --port 6006",
+        "storybook:build": "storybook build --output-dir storybook-static",
+        "build": "rimraf ./dist && tsc --project tsconfig.build.json",
         "dev": "tsc --project tsconfig.json --watch",
-        "lint": "eslint src --max-warnings=0",
+        "lint": "eslint src scripts stories .storybook --max-warnings=0",
         "test": "vitest run --config ../../vitest.config.ts",
         "typecheck": "tsc --project tsconfig.json --noEmit"
     },
-    "publishConfig": {
-        "access": "public"
+    "devDependencies": {
+        "@storybook/web-components-vite": "^10.6.6",
+        "jsdom": "^26.1.0",
+        "lightningcss": "^1.33.0",
+        "postcss": "^8.5.32",
+        "postcss-scss": "^4.0.9",
+        "postcss-selector-parser": "^7.1.7",
+        "sass": "^1.107.1",
+        "storybook": "^10.6.6"
+    },
+    "dependencies": {
+        "lit": "^3.3.3",
+        "lucide": "^1.69.0"
     }
 }

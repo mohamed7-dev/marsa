@@ -1,0 +1,92 @@
+// GtkListBox / AdwActionRow / AdwPreferencesGroup / boxed lists / sidebars.
+//
+//   <ul class="adw-list adw-boxed-list">
+//     <li class="adw-row adw-activatable">
+//       <div class="adw-box adw-content">
+//         <div class="adw-box adw-header">
+//           <div class="adw-prefixes">…</div>
+//           <div class="adw-box adw-title adw-vertical">
+//             <span class="adw-label adw-title">Title</span>
+//             <span class="adw-label adw-subtitle">Subtitle</span>
+//           </div>
+//           <div class="adw-suffixes">…</div>
+//         </div>
+//       </div>
+//     </li>
+//   </ul>
+
+:where(.adw-list, .adw-listview) {
+  display: flex;
+  flex-direction: column;
+}
+:where(.adw-list.adw-horizontal) { flex-direction: row; }
+.adw-list.adw-boxed-list-separate { gap: 12px; }
+
+:where(.adw-row) {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-inline-size: 0;
+  cursor: default;
+}
+.adw-row.adw-activatable { cursor: pointer; }
+.adw-row.adw-activatable:is(.adw-disabled, [aria-disabled='true']) { cursor: default; }
+.adw-row > .adw-box.adw-content { display: flex; flex-direction: column; flex: 1 1 auto; min-inline-size: 0; }
+.adw-row > .adw-box.adw-content > .adw-box.adw-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+.adw-row .adw-header > .adw-prefixes,
+.adw-row .adw-header > .adw-suffixes { display: flex; align-items: center; flex: none; }
+.adw-row .adw-header > .adw-box.adw-title {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+.adw-row .adw-header > .adw-suffixes { margin-inline-start: auto; }
+.adw-row .adw-header .adw-label { overflow-wrap: anywhere; }
+.adw-row.adw-property .adw-header > .adw-box.adw-title { flex-direction: column-reverse; }
+.adw-row.adw-expander > .adw-box.adw-content > .adw-box.adw-header { cursor: pointer; }
+.adw-row.adw-expander > .adw-revealer { grid-template-rows: 0fr; }
+.adw-row.adw-expander.adw-expanded > .adw-revealer { grid-template-rows: 1fr; }
+.adw-row.adw-expander .adw-expander-row-arrow { flex: none; }
+.adw-row.adw-expander.adw-expanded .adw-expander-row-arrow { transform: rotate(-0.5turn); }
+
+// entry / spin rows
+.adw-row.adw-entry .adw-header { align-items: center; }
+.adw-row.adw-entry .adw-text,
+.adw-row.adw-entry input { flex: 1 1 auto; min-inline-size: 0; }
+
+// AdwPreferencesPage / Group
+.adw-preferencespage { display: flex; flex-direction: column; min-block-size: 0; }
+.adw-preferencespage > .adw-scrolledwindow > .adw-viewport > .adw-clamp > .adw-box { flex-direction: column; }
+.adw-preferencesgroup { display: flex; flex-direction: column; }
+.adw-preferencesgroup > .adw-box { flex-direction: column; }
+.adw-preferencesgroup > .adw-box > .adw-box.adw-header { display: flex; align-items: flex-end; flex-direction: row; }
+.adw-preferencesgroup > .adw-box > .adw-box.adw-header > .adw-box.adw-labels { flex: 1 1 auto; flex-direction: column; }
+.adw-preferencesgroup > .adw-box > .adw-box.adw-header > .adw-suffix { flex: none; margin-inline-start: auto; }
+
+// Sidebars
+:where(.adw-navigation-sidebar) { display: flex; flex-direction: column; }
+.adw-sidebar-pane, .adw-content-pane { box-sizing: border-box; }
+.adw-sidebar-pane > .adw-toolbarview { flex: 1 1 auto; }
+.adw-sidebar { display: flex; flex-direction: column; }
+.adw-view-switcher-sidebar { display: flex; flex-direction: column; }
+
+// Menus (AdwPopover.menu / GtkModelButton)
+.adw-popover.adw-menu .adw-modelbutton,
+.adw-modelbutton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-align: start;
+  inline-size: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.adw-modelbutton:is(:disabled, .adw-disabled, [aria-disabled='true']) { cursor: default; }

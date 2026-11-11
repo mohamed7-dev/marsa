@@ -1,0 +1,7 @@
+// Global theme tokens. Widget rules are compiled into Lit styles for use in
+// component Shadow DOM and must not leak into the host document.
+
+@import 'palette';
+@import 'variables';
+@import 'scheme';
+@import 'global-tokens';

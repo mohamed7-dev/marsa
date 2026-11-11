@@ -1,0 +1,62 @@
+// Hand-written. Symbolic icons that libadwaita pulls from the GTK icon theme,
+// plus the helpers that draw the inlined assets from _assets.scss.
+//
+// `icon()` paints a mask filled with `currentColor`, so icons follow the text
+// color exactly like GTK symbolic icons do.
+
+@use 'sass:map';
+@use 'sass:string';
+
+@function _svg($body) {
+  $svg: "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'>#{$body}</svg>";
+  $out: '';
+  @for $i from 1 through string.length($svg) {
+    $c: string.slice($svg, $i, $i);
+    @if $c == '<' { $c: '%3C'; } @else if $c == '>' { $c: '%3E'; } @else if $c == '#' { $c: '%23'; }
+    $out: $out + $c;
+  }
+  @return $out;
+}
+
+@function _chevron($d, $width: 2) {
+  @return _svg("<path d='#{$d}' fill='none' stroke='black' stroke-width='#{$width}' stroke-linecap='round' stroke-linejoin='round'/>");
+}
+
+$icons: (
+  'pan-up-symbolic':        _chevron('M3.5 10.5 8 6l4.5 4.5'),
+  'pan-down-symbolic':      _chevron('M3.5 5.5 8 10l4.5-4.5'),
+  'pan-start-symbolic':     _chevron('M10.5 3.5 6 8l4.5 4.5'),
+  'pan-end-symbolic':       _chevron('M5.5 3.5 10 8l-4.5 4.5'),
+  'pan-end-symbolic-rtl':   _chevron('M10.5 3.5 6 8l4.5 4.5'),
+  'go-previous-symbolic':   _chevron('M10.5 2.5 5 8l5.5 5.5', 2),
+  'go-next-symbolic':       _chevron('M5.5 2.5 11 8l-5.5 5.5', 2),
+  'open-menu-symbolic':     _svg("<path d='M2 3.5h12M2 8h12M2 12.5h12' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/>"),
+);
+
+@function _data-url($data) {
+  @return url('data:image/svg+xml,#{$data}');
+}
+
+/// A data URI for one of the inlined assets (check, bullet, dash, devel-stripes).
+@function asset-url($name) {
+  @return _data-url(map.get($assets, $name));
+}
+
+/// Symbolic icon drawn with `currentColor` (GTK: -gtk-icon-source: -gtk-icontheme()).
+@mixin icon($name) {
+  background-color: currentColor;
+  mask: _data-url(map.get($icons, $name)) center / contain no-repeat;
+  -webkit-mask: _data-url(map.get($icons, $name)) center / contain no-repeat;
+}
+
+/// Mark painted on top of the node's own background (check, radio, dash).
+@mixin icon-fg($name) {
+  background-image: asset-url($name);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@mixin icon-none() {
+  mask: none;
+  -webkit-mask: none;
+}

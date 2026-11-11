@@ -1,0 +1,121 @@
+// AdwToolbarView, header bars, action/search bars, banners, tab bars.
+//
+//   <div class="adw-toolbarview">
+//     <div class="adw-top-bar"><header class="adw-headerbar">…</header></div>
+//     <main class="adw-content">…</main>
+//     <div class="adw-bottom-bar">…</div>
+//   </div>
+
+.adw-toolbarview {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  position: relative;
+}
+.adw-toolbarview > .adw-top-bar,
+.adw-toolbarview > .adw-bottom-bar {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+.adw-toolbarview > .adw-content {
+  flex: 1 1 0;
+  min-block-size: 0;
+  min-inline-size: 0;
+  overflow: auto;
+}
+// content may slide under the bars (AdwToolbarView.extend-content)
+.adw-toolbarview.adw-extend-content > .adw-top-bar,
+.adw-toolbarview.adw-extend-content > .adw-bottom-bar { position: absolute; inset-inline: 0; }
+.adw-toolbarview.adw-extend-content > .adw-top-bar { inset-block-start: 0; }
+.adw-toolbarview.adw-extend-content > .adw-bottom-bar { inset-block-end: 0; }
+
+// GtkHeaderBar:  header > windowhandle > box > ( .start | .windowtitle | .end )
+.adw-headerbar { display: block; flex: none; position: relative; }
+.adw-headerbar > .adw-windowhandle { display: block; }
+.adw-headerbar > .adw-windowhandle > .adw-box {
+  align-items: center;
+  box-sizing: border-box;
+  min-block-size: inherit;
+}
+.adw-headerbar .adw-box.adw-start,
+.adw-headerbar .adw-box.adw-end { align-items: center; flex: none; }
+.adw-headerbar .adw-box.adw-start { margin-inline-end: auto; }
+.adw-headerbar .adw-box.adw-end { margin-inline-start: auto; }
+.adw-headerbar .adw-windowtitle,
+.adw-headerbar .adw-box.adw-title-widget {
+  position: absolute;
+  inset-block: 0;
+  inset-inline: 25% ;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-inline-size: 0;
+  pointer-events: none;
+}
+.adw-headerbar .adw-windowtitle > * { pointer-events: auto; }
+.adw-windowtitle { display: flex; flex-direction: column; align-items: center; justify-content: center; min-inline-size: 0; }
+.adw-windowtitle > .adw-title,
+.adw-windowtitle > .adw-subtitle {
+  display: block;
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.adw-windowcontrols { display: flex; align-items: center; flex: none; }
+.adw-windowhandle { -webkit-user-select: none; user-select: none; }
+
+// GtkActionBar / GtkSearchBar / GtkToolbar / GtkMenuBar
+:where(.adw-toolbar, .adw-menubar) { display: flex; align-items: center; }
+.adw-actionbar > .adw-revealer > .adw-box,
+.adw-searchbar > .adw-revealer > .adw-box {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+.adw-actionbar > .adw-revealer > .adw-box > .adw-box.adw-start { margin-inline-end: auto; }
+.adw-actionbar > .adw-revealer > .adw-box > .adw-box.adw-end { margin-inline-start: auto; }
+.adw-actionbar > .adw-revealer > .adw-box > .adw-box { display: flex; align-items: center; }
+.adw-searchbar > .adw-revealer > .adw-box { justify-content: center; }
+.adw-searchbar .adw-clamp { flex: 1 1 auto; }
+
+// AdwBanner:  banner > revealer > widget
+.adw-banner > .adw-revealer > .adw-widget {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-sizing: border-box;
+}
+.adw-banner .adw-title { flex: 0 1 auto; text-align: center; }
+
+// AdwTabBar:  tabbar > revealer > box > ( .start-action | tabbox | .end-action )
+.adw-tabbar > .adw-revealer > .adw-box { display: flex; align-items: center; }
+.adw-tabbox { display: flex; flex: 1 1 auto; min-inline-size: 0; overflow-x: auto; scrollbar-width: none; }
+.adw-tabbox::-webkit-scrollbar { display: none; }
+.adw-tabbox > .adw-tab { flex: 1 1 0; min-inline-size: 60px; max-inline-size: 220px; }
+.adw-tab { display: flex; align-items: center; position: relative; }
+.adw-tab .adw-label { flex: 1 1 auto; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center; }
+.adw-tabgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+
+// AdwViewSwitcher / AdwViewSwitcherBar / AdwViewSwitcherTitle
+.adw-viewswitcher { display: flex; align-items: stretch; }
+.adw-viewswitcher > .adw-button,
+.adw-viewswitcher > .adw-toggle { flex: 1 1 0; }
+.adw-viewswitcher .adw-button > .adw-box,
+.adw-viewswitcher .adw-toggle > .adw-box { align-items: center; justify-content: center; }
+.adw-viewswitcher.adw-narrow .adw-button > .adw-box,
+.adw-viewswitcher.adw-narrow .adw-toggle > .adw-box { flex-direction: column; gap: 0; }
+.adw-viewswitcherbar { display: block; }
+.adw-viewswitchertitle { display: flex; align-items: center; justify-content: center; }
+.adw-indicatorbin { position: relative; display: inline-flex; }
+.adw-indicatorbin > .adw-indicator { position: absolute; inset-block-start: 0; inset-inline-end: 0; }
+
+// AdwToggleGroup
+:where(.adw-toggle-group) { display: inline-flex; align-items: stretch; }
+:where(.adw-toggle-group) > .adw-toggle { display: flex; align-items: center; justify-content: center; }

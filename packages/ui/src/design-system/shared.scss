@@ -1,0 +1,8 @@
+// Shared libadwaita classes and helpers that components may include in their
+// Shadow DOM. Global theme tokens are provided separately by tokens.css.
+@import 'palette';
+@import 'variables';
+@import 'assets';
+@import 'icons';
+@import 'drawing';
+@import './_common.scss';

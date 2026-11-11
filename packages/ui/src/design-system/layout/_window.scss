@@ -1,0 +1,59 @@
+// AdwWindow / AdwDialog / AdwBottomSheet / AdwMessageDialog / AdwAlertDialog
+
+:where(.adw-window) {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-block-size: 0;
+}
+
+// <div class="adw-dialog-host"> covers its positioned ancestor (or the viewport
+// when position: fixed is used) and centers the dialog.
+.adw-dialog-host {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  box-sizing: border-box;
+  background: color-mix(in srgb, var(--shade-color) 100%, transparent);
+  overflow: hidden;
+}
+.adw-dialog-host:not(.adw-open) { display: none; }
+.adw-dialog-host > .adw-dialog {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+  min-inline-size: 0;
+  overflow: hidden;
+}
+.adw-dialog-host > .adw-dialog.adw-bottom-sheet {
+  align-self: end;
+  inline-size: 100%;
+  max-inline-size: 640px;
+}
+
+// Alert / message dialog content
+:where(.adw-alert) > .adw-sheet,
+:where(.adw-messagedialog) {
+  display: flex;
+  flex-direction: column;
+}
+.adw-dialog-action-area,
+.adw-alert .adw-response-area {
+  display: flex;
+  flex-wrap: wrap;
+}
+.adw-dialog-action-area > *,
+.adw-alert .adw-response-area > * { flex: 1 1 auto; }
+
+// AdwBottomSheet (inline): content, then a sheet pinned to the bottom edge.
+:where(.adw-bottom-sheet:not(.adw-dialog)) {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+:where(.adw-bottom-sheet) > .adw-sheet { flex: none; }
