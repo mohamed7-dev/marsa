@@ -16,11 +16,17 @@
         }
     },
     "scripts": {
-        "build": "tsc --project tsconfig.json",
-        "dev": "tsc --project tsconfig.json --watch",
-        "lint": "eslint src --max-warnings=0",
+        "build": "rimraf ./dist && tsc --project tsconfig.build.json",
+        "dev": "tsc --project tsconfig.build.json --watch",
+        "lint": "eslint src tests --max-warnings=0",
         "test": "vitest run --config ../../vitest.config.ts",
-        "typecheck": "tsc --project tsconfig.json --noEmit"
+        "typecheck": "tsc --project tsconfig.test.json"
+    },
+    "dependencies": {
+        "picocolors": "^1.1.1",
+        "reflect-metadata": "^0.2.2",
+        "rxjs": "^7.8.2",
+        "zod": "^4.6.7"
     },
     "publishConfig": {
         "access": "public"
