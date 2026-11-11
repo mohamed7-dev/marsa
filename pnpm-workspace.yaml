@@ -2,4 +2,12 @@ packages:
     - packages/*
     - examples/*
 allowBuilds:
+    '@parcel/watcher': true
+    esbuild: true
     nx: true
+minimumReleaseAgeExclude:
+    - lucide@1.69.0
+    - '@storybook/builder-vite@10.6.6'
+    - '@storybook/web-components-vite@10.6.6'
+    - '@storybook/web-components@10.6.6'
+    - storybook@10.6.6

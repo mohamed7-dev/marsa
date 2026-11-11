@@ -1,3 +1,3 @@
 # Floating dashboard example
 
-This example is a Phase 1 placeholder. The runnable floating-mode dashboard is planned for Phase 12 and Phase 15.
+This example is a placeholder. The runnable desktop dashboard is planned for later implementation phases.

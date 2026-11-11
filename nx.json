@@ -31,5 +31,6 @@
             "cache": true,
             "inputs": ["default", "{workspaceRoot}/tsconfig.base.json"]
         }
-    }
+    },
+    "analytics": false
 }
