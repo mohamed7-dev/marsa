@@ -1,0 +1,35 @@
+{
+    "name": "@marsa/indexeddb-persistence",
+    "version": "0.0.0",
+    "type": "module",
+    "description": "Browser IndexedDB persistence adapter for Marsa.",
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "dist",
+        "README.md"
+    ],
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "rimraf ./dist && tsc --project tsconfig.build.json",
+        "dev": "tsc --project tsconfig.build.json --watch",
+        "lint": "eslint src tests --max-warnings=0",
+        "test": "vitest run --config ../../vitest.config.ts",
+        "typecheck": "tsc --project tsconfig.test.json"
+    },
+    "dependencies": {
+        "@marsa/core": "workspace:^",
+        "reflect-metadata": "^0.2.2"
+    },
+    "devDependencies": {
+        "fake-indexeddb": "^6.2.4"
+    }
+}

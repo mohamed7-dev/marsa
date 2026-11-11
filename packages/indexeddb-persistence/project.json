@@ -1,0 +1,44 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "@marsa/indexeddb-persistence",
+    "projectType": "library",
+    "sourceRoot": "packages/indexeddb-persistence/src",
+    "targets": {
+        "dev": {
+            "executor": "nx:run-commands",
+            "continuous": true,
+            "options": {
+                "cwd": "packages/indexeddb-persistence",
+                "command": "pnpm dev"
+            }
+        },
+        "build": {
+            "executor": "nx:run-commands",
+            "options": {
+                "cwd": "packages/indexeddb-persistence",
+                "command": "pnpm build"
+            }
+        },
+        "lint": {
+            "executor": "nx:run-commands",
+            "options": {
+                "cwd": "packages/indexeddb-persistence",
+                "command": "pnpm lint"
+            }
+        },
+        "test": {
+            "executor": "nx:run-commands",
+            "options": {
+                "cwd": "packages/indexeddb-persistence",
+                "command": "pnpm test"
+            }
+        },
+        "typecheck": {
+            "executor": "nx:run-commands",
+            "options": {
+                "cwd": "packages/indexeddb-persistence",
+                "command": "pnpm typecheck"
+            }
+        }
+    }
+}
